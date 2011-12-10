@@ -1,6 +1,6 @@
 
 class Organism extends FPoly {
-  RShape[] m_shape = new RShape[7];
+  RShape[] m_shape = new RShape[13];
   String[] files = new String[]{
     "pink.svg", "orange.svg", "green.svg", "rocciaori.svg", "rocciaver.svg"  
   };
@@ -32,6 +32,12 @@ class Organism extends FPoly {
     m_shape[4] = fullSvg.getChild("occhi1");
     m_shape[5] = fullSvg.getChild("occhi2");
     m_shape[6] = fullSvg.getChild("occhi3");
+    m_shape[7] = fullSvg.getChild("occhi4");
+    m_shape[8] = fullSvg.getChild("occhi5");
+    m_shape[9] = fullSvg.getChild("occhi6");
+    m_shape[10] = fullSvg.getChild("occhi7");
+    m_shape[11] = fullSvg.getChild("occhi8");
+    m_shape[12] = fullSvg.getChild("occhi9");
     RShape outline = fullSvg.getChild("outline");
     
     if (m_shape == null || outline == null) {
@@ -65,8 +71,8 @@ class Organism extends FPoly {
   void draw(PGraphics applet) {
    preDraw(applet);
    
-   if (random(0, 30) > 29){
-     o = 3;
+   if (random(0, 25) > 24){
+     o = 9;
    }
    
      m_shape[j].draw(applet);

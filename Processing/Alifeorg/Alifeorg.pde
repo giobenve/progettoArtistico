@@ -61,8 +61,8 @@ void keyPressed() {
     if (intk == -1) {
       switch (key) {
       case 'p':
-        world.add(new Food(mouseX, mouseY));
-        break;
+      world.add(new Food(mouseX, mouseY));
+      break;
       }
     }
   }
