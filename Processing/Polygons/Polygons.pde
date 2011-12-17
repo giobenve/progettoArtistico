@@ -53,6 +53,7 @@ void mousePressed() {
   poly.setFill(102, 102, 102);
   poly.setDensity(10);
   poly.setRestitution(0);
+  poly.setStaticBody(true);
   poly.vertex(mouseX, mouseY);
 }
 

@@ -6,7 +6,7 @@ FWorld world;
 //String filename = "pink.svg";
   int orgid = 0;
   PImage b;
-
+  Stone stone;
   
 void setup(){
   size(500, 500);
@@ -36,14 +36,41 @@ void draw(){
   //image(b, 0, 0, width/2, height/2);
   background(b);
   world.draw(this);
+  
+  if (stone != null) {
+    stone.draw(this);
+  }
+  
   world.step();
 }
 
 void mousePressed(){
   if (world.getBody(mouseX, mouseY) == null) {
-    world.add(new Organism(orgid, mouseX, mouseY));
+    if (orgid >= 0) {
+      world.add(new Organism(orgid, mouseX, mouseY));
+    }
+    else {
+      stone = new Stone();
+      stone.vertex(mouseX, mouseY);
+    }
+
+  
   }
 }
+
+void mouseDragged() {
+  if (stone!=null) {
+    stone.vertex(mouseX, mouseY);
+  }
+}
+
+void mouseReleased() {
+  if (stone!=null) {
+    world.add(stone);
+    stone = null;
+  }
+}
+
 
 void keyPressed() {
   
@@ -62,6 +89,9 @@ void keyPressed() {
       switch (key) {
       case 'p':
       world.add(new Food(mouseX, mouseY));
+      break;
+      case 's':
+      orgid = -1;
       break;
       }
     }
