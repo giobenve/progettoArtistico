@@ -1,6 +1,6 @@
 
 import fisica.*;
-import geomeratiqve.*;
+import geomerative.*;
 
 FWorld world;
 //String filename = "pink.svg";

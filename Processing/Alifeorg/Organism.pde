@@ -7,7 +7,9 @@ class Organism extends FPoly {
   };
   PImage images;
 
-  float s = 100;
+  float s = 70;
+  
+  int orgid;
 
   Organism(int orgid, int x, int y) {
     super();
@@ -15,6 +17,7 @@ class Organism extends FPoly {
     float angle = random(TWO_PI);
     float magnitude = 50;
 
+    this.orgid = orgid;
     this.setPosition(x, y);
     this.setRotation(angle+PI/2);
     this.setVelocity(magnitude*cos(angle), magnitude*sin(angle));
@@ -81,7 +84,10 @@ class Organism extends FPoly {
       o--;
     } 
 
+    
+
     postDraw(applet);
+    ellipse(getX(), getY(), 10, 10);
     
     if ((int)(frameCount % (frameRate*5)) < 1 && random(0, 100) > 90) {
       dimagrisci();
@@ -90,6 +96,12 @@ class Organism extends FPoly {
   
   void mangia() {
     s = s + 10;
+    
+    //Figli
+    if (s > 150) {
+      s = 100;
+      m_world.add(new Organism(orgid, (int)getX(), (int)getY()));
+    }
     recreate();
   }
   
