@@ -60,6 +60,7 @@ class Organism extends FPoly {
 
     this.setNoFill();
     this.setNoStroke();
+
   }
   
   int j = 0;//per disegnare corpo
@@ -71,7 +72,7 @@ class Organism extends FPoly {
     if (random(0, 25) > 24) {
       o = 9;
     }   
-
+    
     m_shape[j].draw(applet);
     j = (j + 1 ) % 4;
 
@@ -80,8 +81,6 @@ class Organism extends FPoly {
       o--;
     } 
 
-    //print(this.getRotation()+" "+this.getVelocityX()+" "+this.getVelocityY()+"\n");
-    //m_shape.draw(applet);
     postDraw(applet);
     
     if ((int)(frameCount % (frameRate*5)) < 1) {
@@ -91,11 +90,7 @@ class Organism extends FPoly {
   
   void mangia() {
     s = s + 10;
-    for (int i=0; i<m_shape.length; i++) {
-      m_shape[i].transform(-s/2, -s/2, s/2, s/2);
-    }
-    //Sistemare i vertici dell'oggetto
-    outline.transform(-s/2, -s/2, s/2, s/2);
+    recreate();
   }
   
   void dimagrisci() {
@@ -104,14 +99,26 @@ class Organism extends FPoly {
     if (s < 40) {
       //this.removeFromWorld();
       m_world.remove(this);
+      return;
     }
 
+    recreate();
+  }
+  
+  void recreate() {
     for (int i=0; i<m_shape.length; i++) {
       m_shape[i].transform(-s/2, -s/2, s/2, s/2);
     }
     //Sistemare i vertici dell'oggetto
     outline.transform(-s/2, -s/2, s/2, s/2); 
-     
+    
+    RPoint[] points = outline.getPoints();
+
+    this.m_vertices = new ArrayList();
+    for (int i=0; i<points.length; i++) {
+      this.vertex(points[i].x, points[i].y);
+    }
+    recreateInWorld();
   }
 }
 

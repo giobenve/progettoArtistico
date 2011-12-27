@@ -14,7 +14,7 @@ void setup(){
   b = loadImage("sabbia.jpg");
   
   
-  frameRate(15);
+  frameRate(30);
 
   Fisica.init(this);
   Fisica.setScale(10);
