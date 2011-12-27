@@ -71,7 +71,7 @@ void mouseReleased() {
 }
 
 void keyPressed() {
-  if (key == BACKSPACE) {
+  if (key == 'g') {
     FBody hovered = world.getBody(mouseX, mouseY);
     if ( hovered != null &&
          hovered.isStatic() == false ) {

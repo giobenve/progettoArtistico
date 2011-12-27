@@ -45,16 +45,22 @@ void draw(){
 }
 
 void mousePressed(){
-  if (world.getBody(mouseX, mouseY) == null) {
+  FBody hovered = world.getBody(mouseX, mouseY);
+  if (hovered == null) {
     if (orgid >= 0) {
       world.add(new Organism(orgid, mouseX, mouseY));
     }
     else {
+      if (orgid == -1){
       stone = new Stone();
       stone.vertex(mouseX, mouseY);
+      }
     }
-
-  
+  }
+  else {
+    if (orgid == -2) {
+      world.remove(hovered);
+    }
   }
 }
 
@@ -92,6 +98,9 @@ void keyPressed() {
       break;
       case 's':
       orgid = -1;
+      break;
+      case 'c':
+      orgid = -2;
       break;
       }
     }
