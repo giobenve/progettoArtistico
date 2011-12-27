@@ -83,7 +83,7 @@ class Organism extends FPoly {
        o--;
      } 
      
-     print(this.getRotation()+" "+this.getVelocityX()+" "+this.getVelocityY()+"\n");
+     //print(this.getRotation()+" "+this.getVelocityX()+" "+this.getVelocityY()+"\n");
    //m_shape.draw(applet);
    postDraw(applet);
   }
