@@ -9,10 +9,10 @@ FWorld world;
   Stone stone;
   
 void setup(){
-  size(500, 500);
+  size(1200, 500);
   smooth();
   b = loadImage("sabbia.jpg");
-  
+  b.resize(width,height);
   
   frameRate(30);
 
@@ -33,7 +33,7 @@ void setup(){
 }
 
 void draw(){
-  //image(b, 0, 0, width/2, height/2);
+ 
   background(b);
   world.draw(this);
   

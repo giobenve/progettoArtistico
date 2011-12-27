@@ -83,7 +83,7 @@ class Organism extends FPoly {
 
     postDraw(applet);
     
-    if ((int)(frameCount % (frameRate*5)) < 1) {
+    if ((int)(frameCount % (frameRate*5)) < 1 && random(0, 100) > 90) {
       dimagrisci();
     }
   }
