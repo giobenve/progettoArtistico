@@ -115,8 +115,10 @@ void contactStarted(FContact c) {
   
   } else if (b1 instanceof Food && !(b2 instanceof Food) && !b2.isStatic()) {
     world.remove(b1);
+    ((Organism) b2).mangia();
   } else if (!(b1 instanceof Food) && b2 instanceof Food && !b1.isStatic()) {
     world.remove(b2);
+    ((Organism) b1).mangia();
   } 
   
 }
