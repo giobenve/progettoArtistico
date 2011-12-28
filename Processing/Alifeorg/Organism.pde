@@ -6,9 +6,6 @@ class Organism extends FPoly {
   String[] files = new String[] {
     "pink.svg", "orange.svg", "green.svg", "rocciaori.svg", "rocciaver.svg"
   };
-
-  float s = 70;//grandezza default
-  
   int orgid;
 
   Organism(int orgid, int x, int y) {
@@ -27,11 +24,9 @@ class Organism extends FPoly {
     RShape fullSvg = RG.loadShape(files[orgid]);
     for (int i=0; i<corpo.length; i++) {//Carico forma corpo
           corpo[i] = fullSvg.getChild("object"+(i+1));
-          corpo[i].transform(-s/2, -s/2, s/2, s/2,true);
     }
     for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
           occhi[i] = fullSvg.getChild("occhi"+(i+1));
-          occhi[i].transform(-s/2, -s/2, s/2, s/2,true);
     }
     outline = fullSvg.getChild("outline");
     
@@ -40,7 +35,6 @@ class Organism extends FPoly {
       println("ERROR: Couldn't find the shapes called 'outline' in the SVG file.");
       return;
     }
-    outline.transform(-s/2, -s/2, s/2, s/2,true); 
 
     RPoint[] points = outline.getPoints();
 
@@ -85,38 +79,45 @@ class Organism extends FPoly {
     }
   }
   
+  int s = 10;//grandezza default
+  
   void mangia() {
-    s = s + 10;
+    s = s + 1;
     
-    Figli
-    if (s > 150) {
-      s = 100;
+    //Figli
+    if (s > 15) {
+      s = 10;
       m_world.add(new Organism(orgid, (int)getX(), (int)getY()));
+      recreate(0.25);
+      return;
     }
-    recreate();
+    recreate(1.1);
   }
   
   void dimagrisci() {
-    s = s - 10;
+    s = s - 1;
     
-    if (s < 40) {
+    if (s < 4) {
       m_world.remove(this);
       return;
     }
 
-    recreate();
+    recreate(0.9);
   }
   
-  void recreate() {
+  void recreate(float f) {
     
     for (int i=0; i<corpo.length; i++) {//Carico forma corpo
-          corpo[i].transform(-s/2, -s/2, s/2, s/2,true);
+          //corpo[i].transform(-s/2, -s/2, s/2, s/2,true);
+          corpo[i].scale(f);
     }
     for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
-          occhi[i].transform(-s/2, -s/2, s/2, s/2,true);
+          //occhi[i].transform(-s/2, -s/2, s/2, s/2,true);
+          occhi[i].scale(f);
     }
     
-    outline.transform(-s/2, -s/2, s/2, s/2,true); 
+    //outline.transform(-s/2, -s/2, s/2, s/2,true); 
+    outline.scale(f);
     
     RPoint[] points = outline.getPoints();
 
