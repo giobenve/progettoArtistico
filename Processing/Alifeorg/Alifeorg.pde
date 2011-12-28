@@ -9,7 +9,7 @@ FWorld world;
   Stone stone;
   
 void setup(){
-  size(1200, 500);
+  size(1200, 500, JAVA2D);
   smooth();
   b = loadImage("sabbia.jpg");
   b.resize(width,height);

@@ -6,7 +6,6 @@ class Organism extends FPoly {
   String[] files = new String[] {
     "pink.svg", "orange.svg", "green.svg", "rocciaori.svg", "rocciaver.svg"
   };
-  //PImage images; per mettere una png
 
   float s = 70;//grandezza default
   
@@ -25,17 +24,14 @@ class Organism extends FPoly {
     this.setDamping(0);
     this.setRestitution(0.5);
 
-    //images = loadImage("PT_Shifty_0021.gif");
-    //attachImage(images);
-
     RShape fullSvg = RG.loadShape(files[orgid]);
     for (int i=0; i<corpo.length; i++) {//Carico forma corpo
           corpo[i] = fullSvg.getChild("object"+(i+1));
-          corpo[i].transform(-s/2, -s/2, s/2, s/2);
+          corpo[i].transform(-s/2, -s/2, s/2, s/2,true);
     }
     for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
           occhi[i] = fullSvg.getChild("occhi"+(i+1));
-          occhi[i].transform(-s/2, -s/2, s/2, s/2);
+          occhi[i].transform(-s/2, -s/2, s/2, s/2,true);
     }
     outline = fullSvg.getChild("outline");
     
@@ -44,7 +40,7 @@ class Organism extends FPoly {
       println("ERROR: Couldn't find the shapes called 'outline' in the SVG file.");
       return;
     }
-    outline.transform(-s/2, -s/2, s/2, s/2); 
+    outline.transform(-s/2, -s/2, s/2, s/2,true); 
 
     RPoint[] points = outline.getPoints();
 
@@ -78,9 +74,13 @@ class Organism extends FPoly {
     
 
     postDraw(applet);
-    ellipse(getX(), getY(), 10, 10);
     
-    if ((int)(frameCount % (frameRate*5)) < 1 && random(0, 100) > 90) {
+    fill(255,0,0);  
+    ellipse(getX(), getY(), 5, 5);
+    noFill();
+    
+    //if ((int)(frameCount % (frameRate*5)) < 1 && random(0, 100) > 90) {
+    if ((int)(frameCount % (frameRate*5)) <1) {
       dimagrisci();
     }
   }
@@ -88,7 +88,7 @@ class Organism extends FPoly {
   void mangia() {
     s = s + 10;
     
-    //Figli
+    Figli
     if (s > 150) {
       s = 100;
       m_world.add(new Organism(orgid, (int)getX(), (int)getY()));
@@ -100,7 +100,6 @@ class Organism extends FPoly {
     s = s - 10;
     
     if (s < 40) {
-      //this.removeFromWorld();
       m_world.remove(this);
       return;
     }
@@ -111,13 +110,13 @@ class Organism extends FPoly {
   void recreate() {
     
     for (int i=0; i<corpo.length; i++) {//Carico forma corpo
-          corpo[i].transform(-s/2, -s/2, s/2, s/2);
+          corpo[i].transform(-s/2, -s/2, s/2, s/2,true);
     }
     for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
-          occhi[i].transform(-s/2, -s/2, s/2, s/2);
+          occhi[i].transform(-s/2, -s/2, s/2, s/2,true);
     }
     
-    outline.transform(-s/2, -s/2, s/2, s/2); 
+    outline.transform(-s/2, -s/2, s/2, s/2,true); 
     
     RPoint[] points = outline.getPoints();
 
