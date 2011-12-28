@@ -23,13 +23,13 @@ class Organism extends FPoly {
 
     RShape fullSvg = RG.loadShape(files[orgid]);
     for (int i=0; i<corpo.length; i++) {//Carico forma corpo
-          corpo[i] = fullSvg.getChild("object"+(i+1));
+      corpo[i] = fullSvg.getChild("object"+(i+1));
     }
     for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
-          occhi[i] = fullSvg.getChild("occhi"+(i+1));
+      occhi[i] = fullSvg.getChild("occhi"+(i+1));
     }
     outline = fullSvg.getChild("outline");
-    
+
 
     if (outline == null) {
       println("ERROR: Couldn't find the shapes called 'outline' in the SVG file.");
@@ -44,9 +44,8 @@ class Organism extends FPoly {
 
     this.setNoFill();
     this.setNoStroke();
-
   }
-  
+
   int j = 0;//per disegnare corpo
   int o = 0;//per disegnare occhi
 
@@ -56,7 +55,7 @@ class Organism extends FPoly {
     if (random(0, 25) > 24) {
       o = 8;
     }   
-    
+
     corpo[j].draw(applet);
     j = (j + 1 ) % 4;
 
@@ -65,25 +64,33 @@ class Organism extends FPoly {
       o--;
     } 
 
-    
+    //setRotation(atan2(getVelocityX(), getVelocityY()) - HALF_PI);
 
     postDraw(applet);
-    
-    fill(255,0,0);  
-    ellipse(getX(), getY(), 5, 5);
+
+    pushMatrix();
+    translate(getX(),getY());
+    stroke(0);
+    line(0, 0, getVelocityX(), getVelocityY()); 
+    noStroke();
+
+    fill(255, 0, 0);  
+    ellipse(0, 0, 5, 5);
     noFill();
-    
+    println(atan2(getVelocityX(), getVelocityY()) - HALF_PI);
+    popMatrix();
+
     //if ((int)(frameCount % (frameRate*5)) < 1 && random(0, 100) > 90) {
     if ((int)(frameCount % (frameRate*5)) <1) {
       dimagrisci();
     }
   }
-  
+
   int s = 10;//grandezza default
-  
+
   void mangia() {
     s = s + 1;
-    
+
     //Figli
     if (s > 15) {
       s = 10;
@@ -93,10 +100,10 @@ class Organism extends FPoly {
     }
     recreate(1.1);
   }
-  
+
   void dimagrisci() {
     s = s - 1;
-    
+
     if (s < 4) {
       m_world.remove(this);
       return;
@@ -104,21 +111,21 @@ class Organism extends FPoly {
 
     recreate(0.9);
   }
-  
+
   void recreate(float f) {
-    
+
     for (int i=0; i<corpo.length; i++) {//Carico forma corpo
-          //corpo[i].transform(-s/2, -s/2, s/2, s/2,true);
-          corpo[i].scale(f);
+      //corpo[i].transform(-s/2, -s/2, s/2, s/2,true);
+      corpo[i].scale(f);
     }
     for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
-          //occhi[i].transform(-s/2, -s/2, s/2, s/2,true);
-          occhi[i].scale(f);
+      //occhi[i].transform(-s/2, -s/2, s/2, s/2,true);
+      occhi[i].scale(f);
     }
-    
+
     //outline.transform(-s/2, -s/2, s/2, s/2,true); 
     outline.scale(f);
-    
+
     RPoint[] points = outline.getPoints();
 
     this.m_vertices = new ArrayList();
