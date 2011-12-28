@@ -1,13 +1,14 @@
 
 class Organism extends FPoly {
-  RShape[] m_shape = new RShape[13];
+  RShape[] corpo = new RShape[4];
+  RShape[] occhi = new RShape[9];
   RShape outline;
   String[] files = new String[] {
     "pink.svg", "orange.svg", "green.svg", "rocciaori.svg", "rocciaver.svg"
   };
-  PImage images;
+  //PImage images; per mettere una png
 
-  float s = 70;
+  float s = 70;//grandezza default
   
   int orgid;
 
@@ -28,34 +29,24 @@ class Organism extends FPoly {
     //attachImage(images);
 
     RShape fullSvg = RG.loadShape(files[orgid]);
-    m_shape[0] = fullSvg.getChild("object1");
-    m_shape[1] = fullSvg.getChild("object2");
-    m_shape[2] = fullSvg.getChild("object3");
-    m_shape[3] = fullSvg.getChild("object4");
-    m_shape[4] = fullSvg.getChild("occhi1");
-    m_shape[5] = fullSvg.getChild("occhi2");
-    m_shape[6] = fullSvg.getChild("occhi3");
-    m_shape[7] = fullSvg.getChild("occhi4");
-    m_shape[8] = fullSvg.getChild("occhi5");
-    m_shape[9] = fullSvg.getChild("occhi6");
-    m_shape[10] = fullSvg.getChild("occhi7");
-    m_shape[11] = fullSvg.getChild("occhi8");
-    m_shape[12] = fullSvg.getChild("occhi9");
-    outline = fullSvg.getChild("outline");
-
-    if (m_shape == null || outline == null) {
-      println("ERROR: Couldn't find the shapes called 'object' and 'outline' in the SVG file.");
-      return;
+    for (int i=0; i<corpo.length; i++) {//Carico forma corpo
+          corpo[i] = fullSvg.getChild("object"+(i+1));
+          corpo[i].transform(-s/2, -s/2, s/2, s/2);
     }
+    for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
+          occhi[i] = fullSvg.getChild("occhi"+(i+1));
+          occhi[i].transform(-s/2, -s/2, s/2, s/2);
+    }
+    outline = fullSvg.getChild("outline");
+    
 
-    for (int i=0; i<m_shape.length; i++) {
-      m_shape[i].transform(-s/2, -s/2, s/2, s/2);
+    if (outline == null) {
+      println("ERROR: Couldn't find the shapes called 'outline' in the SVG file.");
+      return;
     }
     outline.transform(-s/2, -s/2, s/2, s/2); 
 
     RPoint[] points = outline.getPoints();
-
-    if (points==null) return;
 
     for (int i=0; i<points.length; i++) {
       this.vertex(points[i].x, points[i].y);
@@ -73,14 +64,14 @@ class Organism extends FPoly {
     preDraw(applet);
 
     if (random(0, 25) > 24) {
-      o = 9;
+      o = 8;
     }   
     
-    m_shape[j].draw(applet);
+    corpo[j].draw(applet);
     j = (j + 1 ) % 4;
 
     if (o != 0) {
-      m_shape[o+3].draw(applet);
+      occhi[o].draw(applet);
       o--;
     } 
 
@@ -118,10 +109,14 @@ class Organism extends FPoly {
   }
   
   void recreate() {
-    for (int i=0; i<m_shape.length; i++) {
-      m_shape[i].transform(-s/2, -s/2, s/2, s/2);
+    
+    for (int i=0; i<corpo.length; i++) {//Carico forma corpo
+          corpo[i].transform(-s/2, -s/2, s/2, s/2);
     }
-    //Sistemare i vertici dell'oggetto
+    for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
+          occhi[i].transform(-s/2, -s/2, s/2, s/2);
+    }
+    
     outline.transform(-s/2, -s/2, s/2, s/2); 
     
     RPoint[] points = outline.getPoints();
