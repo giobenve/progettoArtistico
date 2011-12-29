@@ -48,6 +48,8 @@ class Organism extends FPoly {
 
   int j = 0;//per disegnare corpo
   int o = 0;//per disegnare occhi
+  
+  int rotationTimer = 0;
 
   void draw(PGraphics applet) {
     preDraw(applet);
@@ -67,7 +69,7 @@ class Organism extends FPoly {
     //setRotation(atan2(getVelocityX(), getVelocityY()) - HALF_PI);
 
     postDraw(applet);
-
+    //DEBUG
     pushMatrix();
     translate(getX(),getY());
     stroke(0);
@@ -77,9 +79,19 @@ class Organism extends FPoly {
     fill(255, 0, 0);  
     ellipse(0, 0, 5, 5);
     noFill();
-    println(atan2(getVelocityX(), getVelocityY()) - HALF_PI);
+    
+    if ((millis() - rotationTimer) > 1000) {
+      if (getContacts().size() == 0) {
+        setRotation(- (atan2(getVelocityX(), getVelocityY()) - PI));
+      } else {
+        rotationTimer = millis();
+      }
+    }
+  
+    //println(atan2(getVelocityX(), getVelocityY()) - HALF_PI);
     popMatrix();
-
+    //DEBUG
+    
     //if ((int)(frameCount % (frameRate*5)) < 1 && random(0, 100) > 90) {
     if ((int)(frameCount % (frameRate*5)) <1) {
       dimagrisci();
@@ -114,18 +126,14 @@ class Organism extends FPoly {
 
   void recreate(float f) {
 
-    for (int i=0; i<corpo.length; i++) {//Carico forma corpo
-      //corpo[i].transform(-s/2, -s/2, s/2, s/2,true);
+    for (int i=0; i<corpo.length; i++) {//Scalo corpo
       corpo[i].scale(f);
     }
-    for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
-      //occhi[i].transform(-s/2, -s/2, s/2, s/2,true);
+    for (int i=0; i<occhi.length; i++) {//Scalo occhi
       occhi[i].scale(f);
     }
-
-    //outline.transform(-s/2, -s/2, s/2, s/2,true); 
     outline.scale(f);
-
+    //Ricreo poligono
     RPoint[] points = outline.getPoints();
 
     this.m_vertices = new ArrayList();
