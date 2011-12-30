@@ -13,8 +13,6 @@ abstract class Organism extends FPoly {
     super();
 
     gene0 = c;
-    gene1 = (int) random(20,200);
-    gene2 = (int) random(50,500);
 
     float angle = random(TWO_PI);
     float magnitude = 50;
@@ -145,7 +143,8 @@ abstract class Organism extends FPoly {
     }
   }
   
-  abstract void mangia(Food f);
+  abstract void mangia(FBody f);
+  abstract boolean good(Food f);
 
   void dimagrisci() {
     //Muore
@@ -179,8 +178,5 @@ abstract class Organism extends FPoly {
     recreateInWorld();
   }
   
-  public boolean good(Food f) {
-    return dist(red(f.gene0), green(f.gene0), blue(f.gene0), red(gene0), green(gene0), blue(gene0)) < 50;
-  }
 }
 

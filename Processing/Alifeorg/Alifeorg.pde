@@ -28,7 +28,9 @@ void setup() {
   world.setGravity(0, 0);
 
 
-  world.add(new Pink(width/2, height/2,color(random(255), random(255), random(255))));
+  world.add(new Pink((int)random(0, width), (int)random(0, height),color(random(255), random(255), random(255))));
+  world.add(new Orange((int)random(0, width), (int)random(0, height),color(random(255), random(255), random(255))));
+  world.add(new Green((int)random(0, width), (int)random(0, height),color(random(255), random(255), random(255))));
 }
 
 void draw() {
@@ -116,17 +118,11 @@ void contactStarted(FContact c) {
   if (b1 instanceof Food && b2 instanceof Food) {
     //Se due cibi si scontrano non fanno niente
   } else if (b1 instanceof Food && !(b2 instanceof Food) && !b2.isStatic()) {
-    Food f = (Food) b1;
     Organism o = (Organism) b2;
-    if (o.good(f)) {
-    world.remove(f);
-    o.mangia(f); }
+    o.mangia(b1);
   } else if (!(b1 instanceof Food) && b2 instanceof Food && !b1.isStatic()) {
-    Food f = (Food) b2;
     Organism o = (Organism) b1;
-    if (o.good(f)) {
-    world.remove(f);
-    o.mangia(f); }
+    o.mangia(b2);
   }
 }
 
