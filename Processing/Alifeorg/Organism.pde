@@ -1,33 +1,33 @@
 
-class Organism extends FPoly {
+abstract class Organism extends FPoly {
   RShape[] corpo = new RShape[4];
   RShape[] occhi = new RShape[9];
   RShape outline;
-  String[] files = new String[] {
-    "pink.svg", "orange.svg", "green.svg", "rocciaori.svg", "rocciaver.svg"
-  };
-  int orgid;
-  
-  color gene;
+  //String[] files = new String[] {"pink.svg", "orange.svg", "green.svg", "rocciaori.svg", "rocciaver.svg" };
 
-  Organism(int orgid, int x, int y, color c) {
+  color gene0;//Colore
+  int gene1;//Onnivoro
+  int gene2;//Raggio vista
+
+  Organism(int x, int y, color c, String file) {
     super();
 
-    gene = c;
+    gene0 = c;
+    gene1 = (int) random(20,200);
+    gene2 = (int) random(50,500);
 
     float angle = random(TWO_PI);
     float magnitude = 50;
 
-    this.orgid = orgid;
     this.setPosition(x, y);
     this.setRotation(angle+PI/2);
     this.setVelocity(magnitude*cos(angle), magnitude*sin(angle));
-    this.setDamping(0);
+    /*this.setDamping(0);
     this.setAngularDamping(0.5);
     this.setRestitution(0.5);
-    this.setGrabbable(false);
+    this.setGrabbable(false);*/
 
-    RShape fullSvg = RG.loadShape(files[orgid]);
+    RShape fullSvg = RG.loadShape(file);
     for (int i=0; i<corpo.length; i++) {//Carico forma corpo
       corpo[i] = fullSvg.getChild("object"+(i+1));
     }
@@ -74,6 +74,14 @@ class Organism extends FPoly {
 
     postDraw(applet);
     
+    if (abs(mouseX-getX()) < 20 && abs(mouseY-getY()) < 20) {
+      fill(gene0, 50);  
+      ellipse(getX(), getY(), gene2, gene2);
+      fill(gene0, 70);
+      ellipse(getX(), getY(), gene1, gene1);
+      noFill();
+    }
+
     pushMatrix();
     translate(getX(), getY());
     rotate(getRotation());
@@ -83,67 +91,61 @@ class Organism extends FPoly {
     noStroke();
 
     fill(255, 0, 0);  
-    ellipse(0, 0, 5, 5);
-    fill(gene);  
-    ellipse(outline.getWidth()/2,outline.getHeight()/3,5,5);
+    ellipse(0, 0, 2, 2);
+    
     noFill();
     //DEBUG
-    
+
     /*if ((millis() - rotationTimer) > 1000) {//Per farlo nuotare dritto
-      if (getContacts().size() == 0) {
-        setRotation( - (atan2(getVelocityX(), getVelocityY()) - PI));
-      } 
-      else {
-        rotationTimer = millis();
-      }
-    }*/
+     if (getContacts().size() == 0) {
+     setRotation( - (atan2(getVelocityX(), getVelocityY()) - PI));
+     } 
+     else {
+     rotationTimer = millis();
+     }
+     }*/
     popMatrix();
-    
+
 
     //if ((millis() - predationTimer) > 1000) {//Per fargli inseguire il cibo
 
-      predation();
-       
-      //predationTimer = millis();
-      
+    predation();
+
+    //predationTimer = millis();
+
     //}
 
-    if ((millis() - dimagrimentoTimer) > 10000) {
+    if ((millis() - dimagrimentoTimer) > 20000) {
       dimagrisci();
     }
   }
-  
-  //Food target;
-  
-  void predation() {
-    //if (target == null) {
-       ArrayList allb = m_world.getBodies();
-       for (int i=0; i<allb.size(); i++) {
-          FBody b = (FBody) allb.get(i);
-          if (b instanceof Food) {
-            if (dist(getX(), getY(), b.getX(), b.getY()) < 200) {//Distanza dal cibo
-              stroke(0);
-              line(b.getX(), b.getY(),getX(), getY());
-              noStroke();
-              addForce(b.getX()-getX(), b.getY()-getY());
-              return;
-            
-            }
-          }
-       }
-    //}
-  }
 
-  void mangia() {
-    //Figli
-    if (outline.getHeight() > 80) {
-      m_world.add(new Organism(orgid, (int)getX(), (int)getY(), gene));
-      recreate(0.25);
-      return;
+  Food target;
+
+  void predation() {
+    if (target == null) {
+      ArrayList allb = m_world.getBodies();
+      for (int i=0; i<allb.size(); i++) {//Cerco Food
+        FBody b = (FBody) allb.get((int)random(0, allb.size()));
+        if (
+          b instanceof Food &&
+          dist(getX(), getY(), b.getX(), b.getY()) < 200 &&
+          good((Food) b)) {//Distanza dal cibo
+          target = (Food) b;
+          return;
+        }
+      }
     }
-    recreate(1.1);
-    dimagrimentoTimer = millis();
+    if (target != null) {
+      if (!target.isDrawable()) {target = null; return;}
+      stroke(0);
+      line(target.getX(), target.getY(), getX(), getY());
+      noStroke();
+      addForce(target.getX()-getX(), target.getY()-getY());
+    }
   }
+  
+  abstract void mangia(Food f);
 
   void dimagrisci() {
     //Muore
@@ -175,6 +177,10 @@ class Organism extends FPoly {
 
 
     recreateInWorld();
+  }
+  
+  public boolean good(Food f) {
+    return dist(red(f.gene0), green(f.gene0), blue(f.gene0), red(gene0), green(gene0), blue(gene0)) < 50;
   }
 }
 

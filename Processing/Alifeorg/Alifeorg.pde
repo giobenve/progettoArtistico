@@ -10,7 +10,7 @@ Stone stone;
 
 void setup() {
   size(1200, 500);
-  smooth();
+  //smooth();
   b = loadImage("sabbia.jpg");
   b.resize(width, height);
 
@@ -28,7 +28,7 @@ void setup() {
   world.setGravity(0, 0);
 
 
-  world.add(new Organism(orgid, width/2, height/2,color(random(255), random(255), random(255))));
+  world.add(new Pink(width/2, height/2,color(random(255), random(255), random(255))));
 }
 
 void draw() {
@@ -46,16 +46,22 @@ void draw() {
 void mousePressed() {
   FBody hovered = world.getBody(mouseX, mouseY);
   if (hovered == null) {
-    if (orgid >= 0) {//Aggiungo nuovo organismo
-      FBody b = new Organism(orgid, mouseX, mouseY, color(random(255), random(255), random(255)));
-      world.add(b);
-    }
-    else if (orgid == -1) {//Inizio a disegnare pietra
-      stone = new Stone();
-      stone.vertex(mouseX, mouseY);
-    }
-  } 
-  else if (orgid == -2) {//Cancello corpo
+     switch (orgid) {
+      case 0:
+        world.add(new Pink(mouseX, mouseY, color(random(255), random(255), random(255))));
+        break;
+      case 1:
+        world.add(new Orange(mouseX, mouseY, color(random(255), random(255), random(255))));
+        break;
+      case 2:
+        world.add(new Green(mouseX, mouseY, color(random(255), random(255), random(255))));
+        break;
+      case -1:
+        stone = new Stone();
+        stone.vertex(mouseX, mouseY);
+        break;
+      }
+  } else if (orgid == -2) {//Cancello corpo
     world.remove(hovered);
   }
 }
@@ -83,7 +89,7 @@ void keyPressed() {
     int intk = -1;
     try {
       intk = Integer.parseInt(key + "");
-      orgid = intk;
+      orgid = constrain(intk, 0, 2);
     }
     catch (NumberFormatException e) {
     }
@@ -112,15 +118,16 @@ void contactStarted(FContact c) {
   } else if (b1 instanceof Food && !(b2 instanceof Food) && !b2.isStatic()) {
     Food f = (Food) b1;
     Organism o = (Organism) b2;
-    if (dist(red(f.gene), green(f.gene), blue(f.gene), red(o.gene), green(o.gene), blue(o.gene)) < 50) {
+    if (o.good(f)) {
     world.remove(f);
-    o.mangia(); }
+    o.mangia(f); }
   } else if (!(b1 instanceof Food) && b2 instanceof Food && !b1.isStatic()) {
     Food f = (Food) b2;
     Organism o = (Organism) b1;
-    if (dist(red(f.gene), green(f.gene), blue(f.gene), red(o.gene), green(o.gene), blue(o.gene)) < 50) {
+    if (o.good(f)) {
     world.remove(f);
-    o.mangia(); }
+    o.mangia(f); }
   }
 }
+
 
