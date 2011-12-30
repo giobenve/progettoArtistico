@@ -46,38 +46,19 @@ void draw() {
 void mousePressed() {
   FBody hovered = world.getBody(mouseX, mouseY);
   if (hovered == null) {
-    if (orgid >= 0) {
+    if (orgid >= 0) {//Aggiungo nuovo organismo
       FBody b = new Organism(orgid, mouseX, mouseY);
       world.add(b);
-      /*FMouseJoint mj = new FMouseJoint(b, mouseX, mouseY);
-      mj.setDrawable(true);
-      mj.setFrequency(0.1);
-      world.add(mj);*/
     }
-    else {
-      if (orgid == -1) {
-        stone = new Stone();
-        stone.vertex(mouseX, mouseY);
-      }
+    else if (orgid == -1) {//Inizio a disegnare pietra
+      stone = new Stone();
+      stone.vertex(mouseX, mouseY);
     }
-  }
-  else {
-    if (orgid == -2) {
-      world.remove(hovered);
-    }
+  } 
+  else if (orgid == -2) {//Cancello corpo
+    world.remove(hovered);
   }
 }
-
-/*void mouseMoved() {
-  Object[] bs = world.getBodies().toArray();
-
-  for (int i=0; i<bs.length; i++) {
-    Object[] js = ((FBody) bs[i]).getJoints().toArray();
-    for (int j=0; j<js.length; j++) {
-      ((FMouseJoint) js[j]).setTarget(mouseX, mouseY);
-    }
-  }
-}*/
 
 void mouseDragged() {
   if (stone!=null) {
@@ -127,12 +108,11 @@ void contactStarted(FContact c) {
   FBody b2 = c.getBody2();
 
   if (b1 instanceof Food && b2 instanceof Food) {
-  } 
-  else if (b1 instanceof Food && !(b2 instanceof Food) && !b2.isStatic()) {
+    //Se due cibi si scontrano non fanno niente
+  } else if (b1 instanceof Food && !(b2 instanceof Food) && !b2.isStatic()) {
     world.remove(b1);
     ((Organism) b2).mangia();
-  } 
-  else if (!(b1 instanceof Food) && b2 instanceof Food && !b1.isStatic()) {
+  } else if (!(b1 instanceof Food) && b2 instanceof Food && !b1.isStatic()) {
     world.remove(b2);
     ((Organism) b1).mangia();
   }

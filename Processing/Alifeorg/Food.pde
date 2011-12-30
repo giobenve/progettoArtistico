@@ -15,7 +15,7 @@ class Food extends FCircle {
     this.setVelocity(magnitude*cos(angle), magnitude*sin(angle));
     this.setDamping(0);
     this.setRestitution(0.5);
-    this.setDensity(100);
+    //this.setDensity(100);
     
   }
  

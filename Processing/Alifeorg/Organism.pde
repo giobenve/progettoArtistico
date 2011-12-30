@@ -7,6 +7,12 @@ class Organism extends FPoly {
     "pink.svg", "orange.svg", "green.svg", "rocciaori.svg", "rocciaver.svg"
   };
   int orgid;
+  
+  float[] gene = new float[] {
+    
+    
+    
+  };
 
   Organism(int orgid, int x, int y) {
     super();
@@ -18,7 +24,8 @@ class Organism extends FPoly {
     this.setPosition(x, y);
     this.setRotation(angle+PI/2);
     this.setVelocity(magnitude*cos(angle), magnitude*sin(angle));
-    this.setDamping(0);
+    this.setDamping(0.05);
+    this.setAngularDamping(0.5);
     this.setRestitution(0.5);
     this.setGrabbable(false);
 
@@ -52,28 +59,26 @@ class Organism extends FPoly {
 
   int rotationTimer = 0;
   int predationTimer = 0;
+  int dimagrimentoTimer = 0;
 
   void draw(PGraphics applet) {
     preDraw(applet);
-
-    if (random(0, 25) > 24) {
-      o = 8;
-    }   
-
+    //Movimento corpo
     corpo[j].draw(applet);
     j = (j + 1 ) % 4;
 
+    //Movimento occhi
+    if (random(0, 25) > 24) o = 8;
     if (o != 0) {
       occhi[o].draw(applet);
       o--;
-    } 
-
-    //setRotation(atan2(getVelocityX(), getVelocityY()) - HALF_PI);
+    }
 
     postDraw(applet);
-    //DEBUG
+    
     pushMatrix();
     translate(getX(), getY());
+    rotate(getRotation());
     /*DEBUG
     stroke(0);
     line(0, 0, getVelocityX(), getVelocityY()); 
@@ -81,8 +86,10 @@ class Organism extends FPoly {
 
     fill(255, 0, 0);  
     ellipse(0, 0, 5, 5);
+    fill(255);  
+    ellipse(outline.getWidth()/2,outline.getHeight()/5,3,3);
     noFill();
-    */
+    *///DEBUG
     
     /*if ((millis() - rotationTimer) > 1000) {//Per farlo nuotare dritto
       if (getContacts().size() == 0) {
@@ -92,71 +99,63 @@ class Organism extends FPoly {
         rotationTimer = millis();
       }
     }*/
-
-    if ((millis() - predationTimer) > 1000) {//Per fargli inseguire il cibo
-      ArrayList js = getJoints();
-
-      if (js.size() == 0) {
-        ArrayList allb = m_world.getBodies();
-        for (int i=0; i<allb.size(); i++) {
-          FBody b = (FBody) allb.get(i);
-          if (b instanceof Food) {
-            if (dist(getX(), getY(), b.getX(), b.getY()) < 200) {//Distanza dal cibo
-
-              FDistanceJoint dj = new FDistanceJoint(this, b);
-              dj.setAnchor1(outline.getWidth()/2,outline.getHeight()/2);
-              //FPrismaticJoint dj = new FPrismaticJoint(b, this);
-              //FMouseJoint dj = new FMouseJoint(this, width/2, height/2);
-              dj.setLength(0);
-              dj.setDrawable(false);
-              dj.setFrequency(0.1);
-              m_world.add(dj);
-
-
-              break;
-            }
-          }
-        }
-      } 
-      
-      predationTimer = millis();
-      
-    }
-
-    //println(atan2(getVelocityX(), getVelocityY()) - HALF_PI);
     popMatrix();
-    //DEBUG
+    
 
-    if ((int)(frameCount % (frameRate*5)) < 1 && random(0, 10) > 8) {
-    //if ((int)(frameCount % (frameRate*5)) <1) {
+    //if ((millis() - predationTimer) > 1000) {//Per fargli inseguire il cibo
+
+      predation();
+       
+      //predationTimer = millis();
+      
+    //}
+
+    if ((millis() - dimagrimentoTimer) > 10000) {
       dimagrisci();
     }
   }
-
-  int s = 10;//grandezza default
+  
+  //Food target;
+  
+  void predation() {
+    //if (target == null) {
+       ArrayList allb = m_world.getBodies();
+       for (int i=0; i<allb.size(); i++) {
+          FBody b = (FBody) allb.get(i);
+          if (b instanceof Food) {
+            if (dist(getX(), getY(), b.getX(), b.getY()) < 200) {//Distanza dal cibo
+              stroke(0);
+              //line(b.getX(), b.getY(),getX(), getY());
+              noStroke();
+              addForce(b.getX()-getX(), b.getY()-getY());
+              return;
+            
+            }
+          }
+       }
+    //}
+  }
 
   void mangia() {
-    s = s + 1;
-
     //Figli
-    if (s > 15) {
-      s = 10;
+    if (outline.getHeight() > 80) {
       m_world.add(new Organism(orgid, (int)getX(), (int)getY()));
       recreate(0.25);
       return;
     }
     recreate(1.1);
+    dimagrimentoTimer = millis();
   }
 
   void dimagrisci() {
-    s = s - 1;
-
-    if (s < 2) {
+    //Muore
+    if (outline.getHeight() < 15) {
       m_world.remove(this);
       return;
     }
 
     recreate(0.9);
+    dimagrimentoTimer = millis();
   }
 
   void recreate(float f) {
