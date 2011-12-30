@@ -28,7 +28,7 @@ void setup() {
   world.setGravity(0, 0);
 
 
-  world.add(new Organism(orgid, width/2, height/2));
+  world.add(new Organism(orgid, width/2, height/2,color(random(255), random(255), random(255))));
 }
 
 void draw() {
@@ -47,7 +47,7 @@ void mousePressed() {
   FBody hovered = world.getBody(mouseX, mouseY);
   if (hovered == null) {
     if (orgid >= 0) {//Aggiungo nuovo organismo
-      FBody b = new Organism(orgid, mouseX, mouseY);
+      FBody b = new Organism(orgid, mouseX, mouseY, color(random(255), random(255), random(255)));
       world.add(b);
     }
     else if (orgid == -1) {//Inizio a disegnare pietra
@@ -110,11 +110,17 @@ void contactStarted(FContact c) {
   if (b1 instanceof Food && b2 instanceof Food) {
     //Se due cibi si scontrano non fanno niente
   } else if (b1 instanceof Food && !(b2 instanceof Food) && !b2.isStatic()) {
-    world.remove(b1);
-    ((Organism) b2).mangia();
+    Food f = (Food) b1;
+    Organism o = (Organism) b2;
+    if (dist(red(f.gene), green(f.gene), blue(f.gene), red(o.gene), green(o.gene), blue(o.gene)) < 50) {
+    world.remove(f);
+    o.mangia(); }
   } else if (!(b1 instanceof Food) && b2 instanceof Food && !b1.isStatic()) {
-    world.remove(b2);
-    ((Organism) b1).mangia();
+    Food f = (Food) b2;
+    Organism o = (Organism) b1;
+    if (dist(red(f.gene), green(f.gene), blue(f.gene), red(o.gene), green(o.gene), blue(o.gene)) < 50) {
+    world.remove(f);
+    o.mangia(); }
   }
 }
 

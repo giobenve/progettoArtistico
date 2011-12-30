@@ -8,14 +8,12 @@ class Organism extends FPoly {
   };
   int orgid;
   
-  float[] gene = new float[] {
-    
-    
-    
-  };
+  color gene;
 
-  Organism(int orgid, int x, int y) {
+  Organism(int orgid, int x, int y, color c) {
     super();
+
+    gene = c;
 
     float angle = random(TWO_PI);
     float magnitude = 50;
@@ -24,7 +22,7 @@ class Organism extends FPoly {
     this.setPosition(x, y);
     this.setRotation(angle+PI/2);
     this.setVelocity(magnitude*cos(angle), magnitude*sin(angle));
-    this.setDamping(0.05);
+    this.setDamping(0);
     this.setAngularDamping(0.5);
     this.setRestitution(0.5);
     this.setGrabbable(false);
@@ -79,17 +77,17 @@ class Organism extends FPoly {
     pushMatrix();
     translate(getX(), getY());
     rotate(getRotation());
-    /*DEBUG
+    //DEBUG
     stroke(0);
     line(0, 0, getVelocityX(), getVelocityY()); 
     noStroke();
 
     fill(255, 0, 0);  
     ellipse(0, 0, 5, 5);
-    fill(255);  
-    ellipse(outline.getWidth()/2,outline.getHeight()/5,3,3);
+    fill(gene);  
+    ellipse(outline.getWidth()/2,outline.getHeight()/3,5,5);
     noFill();
-    *///DEBUG
+    //DEBUG
     
     /*if ((millis() - rotationTimer) > 1000) {//Per farlo nuotare dritto
       if (getContacts().size() == 0) {
@@ -125,7 +123,7 @@ class Organism extends FPoly {
           if (b instanceof Food) {
             if (dist(getX(), getY(), b.getX(), b.getY()) < 200) {//Distanza dal cibo
               stroke(0);
-              //line(b.getX(), b.getY(),getX(), getY());
+              line(b.getX(), b.getY(),getX(), getY());
               noStroke();
               addForce(b.getX()-getX(), b.getY()-getY());
               return;
@@ -139,7 +137,7 @@ class Organism extends FPoly {
   void mangia() {
     //Figli
     if (outline.getHeight() > 80) {
-      m_world.add(new Organism(orgid, (int)getX(), (int)getY()));
+      m_world.add(new Organism(orgid, (int)getX(), (int)getY(), gene));
       recreate(0.25);
       return;
     }
