@@ -9,7 +9,7 @@ PImage b;
 Stone stone;
 
 void setup() {
-  size(1200, 500);
+  size(500, 500);
   //smooth();
   b = loadImage("sabbia.jpg");
   b.resize(width, height);
@@ -28,9 +28,10 @@ void setup() {
   world.setGravity(0, 0);
 
 
-  world.add(new Pink((int)random(0, width), (int)random(0, height),color(random(255), random(255), random(255))));
-  world.add(new Orange((int)random(0, width), (int)random(0, height),color(random(255), random(255), random(255))));
-  world.add(new Green((int)random(0, width), (int)random(0, height),color(random(255), random(255), random(255))));
+  world.add(new Pink((int)random(0, width), (int)random(0, height)));
+  world.add(new Orange((int)random(0, width), (int)random(0, height)));
+  world.add(new Green((int)random(0, width), (int)random(0, height)));
+  
 }
 
 void draw() {
@@ -48,34 +49,35 @@ void draw() {
 void mousePressed() {
   FBody hovered = world.getBody(mouseX, mouseY);
   if (hovered == null) {
-     switch (orgid) {
-      case 0:
-        world.add(new Pink(mouseX, mouseY, color(random(255), random(255), random(255))));
-        break;
-      case 1:
-        world.add(new Orange(mouseX, mouseY, color(random(255), random(255), random(255))));
-        break;
-      case 2:
-        world.add(new Green(mouseX, mouseY, color(random(255), random(255), random(255))));
-        break;
-      case -1:
-        stone = new Stone();
-        stone.vertex(mouseX, mouseY);
-        break;
-      }
-  } else if (orgid == -2) {//Cancello corpo
+    switch (orgid) {
+    case 0:
+      world.add(new Pink(mouseX, mouseY));
+      break;
+    case 1:
+      world.add(new Orange(mouseX, mouseY));
+      break;
+    case 2:
+      world.add(new Green(mouseX, mouseY));
+      break;
+    case -1://Disegno sasso
+      stone = new Stone();
+      stone.vertex(mouseX, mouseY);
+      break;
+    }
+  } 
+  else if (orgid == -2) {//Cancello corpo
     world.remove(hovered);
   }
 }
 
 void mouseDragged() {
-  if (stone!=null) {
+  if (stone!=null) {//Disegno sasso
     stone.vertex(mouseX, mouseY);
   }
 }
 
 void mouseReleased() {
-  if (stone!=null) {
+  if (stone!=null) {//Disegno sasso
     world.add(stone);
     stone = null;
   }
@@ -92,7 +94,7 @@ void keyPressed() {
     try {
       intk = Integer.parseInt(key + "");
       orgid = constrain(intk, 0, 2);
-    }
+    } 
     catch (NumberFormatException e) {
     }
     if (intk == -1) {
@@ -117,13 +119,24 @@ void contactStarted(FContact c) {
 
   if (b1 instanceof Food && b2 instanceof Food) {
     //Se due cibi si scontrano non fanno niente
-  } else if (b1 instanceof Food && !(b2 instanceof Food) && !b2.isStatic()) {
-    Organism o = (Organism) b2;
-    o.mangia(b1);
-  } else if (!(b1 instanceof Food) && b2 instanceof Food && !b1.isStatic()) {
-    Organism o = (Organism) b1;
-    o.mangia(b2);
+  } 
+  else if (!b1.isStatic() && !b2.isStatic()) {
+    if (b1 instanceof Food && !(b2 instanceof Food)) {
+      Organism o = (Organism) b2;
+      o.mangia(b1);
+    } 
+    else if (!(b1 instanceof Food) && b2 instanceof Food) {
+      Organism o = (Organism) b1;
+      o.mangia(b2);
+    }
+    else if (b1 instanceof Green && !(b2 instanceof Food)) {
+      Organism o = (Organism) b1;
+      o.mangia(b2);
+    } 
+    else if (!(b1 instanceof Food) && b2 instanceof Green) {
+      Organism o = (Organism) b2;
+      o.mangia(b1);
+    }
   }
 }
-
 

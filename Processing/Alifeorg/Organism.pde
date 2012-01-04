@@ -9,10 +9,8 @@ abstract class Organism extends FPoly {
   int gene1;//Onnivoro
   int gene2;//Raggio vista
 
-  Organism(int x, int y, color c, String file) {
+  Organism(int x, int y, String file) {
     super();
-
-    gene0 = c;
 
     float angle = random(TWO_PI);
     float magnitude = 50;
@@ -21,9 +19,10 @@ abstract class Organism extends FPoly {
     this.setRotation(angle+PI/2);
     this.setVelocity(magnitude*cos(angle), magnitude*sin(angle));
     /*this.setDamping(0);
-    this.setAngularDamping(0.5);
+    this.setAngularDamping(0.5);*/
     this.setRestitution(0.5);
-    this.setGrabbable(false);*/
+    this.setDensity(0.7);
+    /*this.setGrabbable(false);*/
 
     RShape fullSvg = RG.loadShape(file);
     for (int i=0; i<corpo.length; i++) {//Carico forma corpo
@@ -130,16 +129,20 @@ abstract class Organism extends FPoly {
           dist(getX(), getY(), b.getX(), b.getY()) < 200 &&
           good((Food) b)) {//Distanza dal cibo
           target = (Food) b;
-          return;
+          setVelocity(target.getX()-getX(), target.getY()-getY());
+          break;
         }
       }
     }
     if (target != null) {
-      if (!target.isDrawable()) {target = null; return;}
+      //TODO non funziona if (!target.isDrawable()) {target = null; return;}
+      addForce(target.getX()-getX(), target.getY()-getY());
+      
       stroke(0);
+      line(getForceX()-getX(), getForceY()-getY(), getX(), getY());
       line(target.getX(), target.getY(), getX(), getY());
       noStroke();
-      addForce(target.getX()-getX(), target.getY()-getY());
+      
     }
   }
   
@@ -179,4 +182,5 @@ abstract class Organism extends FPoly {
   }
   
 }
+
 

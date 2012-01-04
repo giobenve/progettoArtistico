@@ -1,9 +1,10 @@
 class Orange extends Organism {
   
-  Orange(int x, int y, color c) { 
-    super(x,y,c, "orange.svg");
-    gene1 = (int) random(40,70);
+  Orange(int x, int y) { 
+    super(x,y,"orange.svg");
+    gene1 = (int) random(70,100);
     gene2 = (int) random(200,700);
+        gene0 = color(gene1, gene2, random(255));
 
   }
   
@@ -13,7 +14,8 @@ class Orange extends Organism {
       m_world.remove(f);
     //Figli
     if (outline.getHeight() > 80) {
-      Organism org = new Orange((int)getX(), (int)getY(), gene0);
+      Organism org = new Orange((int)getX(), (int)getY());
+      org.gene0 = gene0;
       org.gene1 = gene1;
       org.gene2 = gene2;
       m_world.add(org);
@@ -31,8 +33,9 @@ class Orange extends Organism {
   }
   
     public boolean good(Food f) {
-    return dist(red(f.gene0), green(f.gene0), blue(f.gene0), red(gene0), green(gene0), blue(gene0)) < 50;
+    return dist(red(f.gene0), green(f.gene0), blue(f.gene0), red(gene0), green(gene0), blue(gene0)) < gene1;
   }
   
 }
+
 
