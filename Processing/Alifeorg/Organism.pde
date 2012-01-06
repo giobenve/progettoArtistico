@@ -118,7 +118,7 @@ abstract class Organism extends FPoly {
     }
   }
 
-  Food target;
+  FBody target;
 
   void predation() {
     if (target == null) {
@@ -128,8 +128,8 @@ abstract class Organism extends FPoly {
         if (
           b instanceof Food &&
           dist(getX(), getY(), b.getX(), b.getY()) < 200 &&
-          good((Food) b)) {//Distanza dal cibo
-          target = (Food) b;
+          good(b) {//Distanza dal cibo
+          target = b;
           setVelocity(target.getX()-getX(), target.getY()-getY());
           break;
         }
@@ -149,7 +149,14 @@ abstract class Organism extends FPoly {
   }
   
   abstract void mangia(FBody f);
-  abstract boolean good(Food f);
+  
+  public boolean good(FBody f) {
+    if (f instanceof Food) {
+      Food fo = (Food) f;
+      return dist(red(fo.gene0), green(fo.gene0), blue(fo.gene0), red(gene0), green(gene0), blue(gene0)) < gene1;
+    }
+    return false;  
+  }
 
   void dimagrisci() {
     //Muore

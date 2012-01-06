@@ -32,10 +32,6 @@ class Orange extends Organism {
     }
   }
   
-    public boolean good(Food f) {
-    return dist(red(f.gene0), green(f.gene0), blue(f.gene0), red(gene0), green(gene0), blue(gene0)) < gene1;
-  }
-  
 }
 
 

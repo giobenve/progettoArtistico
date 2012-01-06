@@ -1,3 +1,5 @@
+import processing.opengl.*;
+
 import controlP5.*;
 import fisica.*;
 import geomerative.*;
@@ -11,12 +13,12 @@ PImage b;
 Stone stone;
 
 void setup() {
-  size(500, 500);
+  size(1024, 768);
   //smooth();
   b = loadImage("sabbia.jpg");
   b.resize(width, height);
 
-  frameRate(30);
+  frameRate(24);
   
   controlP5 = new ControlP5(this);
   gui = new GUI(controlP5);
@@ -49,11 +51,13 @@ void draw() {
   }
 
   world.step();
+  fill(0);
+  text(frameRate, width-50, height-20);
 }
 
 void mousePressed() {
   FBody hovered = world.getBody(mouseX, mouseY);
-  if (hovered == null && !gui.panel.isVisible() && !gui.b.booleanValue()) {
+  if (hovered == null && !gui.panel.isVisible()) {
     switch (orgid) {
     case 0:
       world.add(new Pink(mouseX, mouseY));
