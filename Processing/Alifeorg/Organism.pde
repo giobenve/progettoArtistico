@@ -82,16 +82,17 @@ abstract class Organism extends FPoly {
     pushMatrix();
     translate(getX(), getY());
     rotate(getRotation());
-    //DEBUG
+    /*DEBUG
     stroke(0);
     line(0, 0, getVelocityX(), getVelocityY()); 
     noStroke();
 
     fill(255, 0, 0);  
-    ellipse(0, 0, 2, 2);
+    //ellipse(0, 0, 2, 2);
     
     noFill();
     //DEBUG
+    */
 
     /*if ((millis() - rotationTimer) > 1000) {//Per farlo nuotare dritto
      if (getContacts().size() == 0) {
@@ -138,11 +139,12 @@ abstract class Organism extends FPoly {
       //TODO non funziona if (!target.isDrawable()) {target = null; return;}
       addForce(target.getX()-getX(), target.getY()-getY());
       
+      /* DEBUG
       stroke(0);
       line(getForceX()-getX(), getForceY()-getY(), getX(), getY());
       line(target.getX(), target.getY(), getX(), getY());
       noStroke();
-      
+      */
     }
   }
   

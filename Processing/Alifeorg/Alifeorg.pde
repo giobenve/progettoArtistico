@@ -1,7 +1,9 @@
-
+import controlP5.*;
 import fisica.*;
 import geomerative.*;
 
+ControlP5 controlP5;
+GUI gui;
 FWorld world;
 //String filename = "pink.svg";
 int orgid = 0;
@@ -15,6 +17,9 @@ void setup() {
   b.resize(width, height);
 
   frameRate(30);
+  
+  controlP5 = new ControlP5(this);
+  gui = new GUI(controlP5);
 
   Fisica.init(this);
   Fisica.setScale(10);
@@ -100,7 +105,7 @@ void keyPressed() {
     if (intk == -1) {
       switch (key) {
       case 'p':
-        world.add(new Food(mouseX, mouseY));
+        world.add(new Food(mouseX, mouseY, gui.cp.getColorValue()));
         break;
       case 's':
         orgid = -1;

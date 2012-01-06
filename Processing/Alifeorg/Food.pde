@@ -4,10 +4,10 @@ class Food extends FCircle {
   ArrayList orgs;
   color gene0;
 
-  Food(int x, int y) {
+  Food(int x, int y, color c) {
     super(8);
-
-    gene0 = color(random(255), random(255), random(255));
+    gene0 = c;
+    //gene0 = color(random(255), random(255), random(255));
 
     float angle = random(TWO_PI);
     float magnitude = 50;
