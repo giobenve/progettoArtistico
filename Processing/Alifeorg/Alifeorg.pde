@@ -53,7 +53,7 @@ void draw() {
 
 void mousePressed() {
   FBody hovered = world.getBody(mouseX, mouseY);
-  if (hovered == null) {
+  if (hovered == null && !gui.panel.isVisible() && !gui.b.booleanValue()) {
     switch (orgid) {
     case 0:
       world.add(new Pink(mouseX, mouseY));
