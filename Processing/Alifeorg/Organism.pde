@@ -128,7 +128,7 @@ abstract class Organism extends FPoly {
         if (
           b instanceof Food &&
           dist(getX(), getY(), b.getX(), b.getY()) < 200 &&
-          good(b) {//Distanza dal cibo
+          good(b)) {//Distanza dal cibo
           target = b;
           setVelocity(target.getX()-getX(), target.getY()-getY());
           break;
