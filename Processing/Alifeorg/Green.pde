@@ -3,15 +3,10 @@ class Green extends Organism {
   Green(int x, int y) { 
 
     super(x, y, "green.svg");
-<<<<<<< HEAD
     gene1 = (int) (900);
     gene2 = (int) random(50, 300);
     gene0 = color(0, random(0, 255), 0);
-=======
-    gene1 = (int) random(100, 255);
-    gene2 = (int) random(50, 500);
-    gene0 = color(gene1, gene2, random(255));
->>>>>>> 9a732a37fa2b76cdf6d14b76d5266ccd4d313f56
+
   }
 
   void mangia(FBody f) {
