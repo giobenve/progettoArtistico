@@ -1,5 +1,10 @@
 import processing.opengl.*;
 
+<<<<<<< HEAD
+import processing.opengl.*;
+
+=======
+>>>>>>> 9a732a37fa2b76cdf6d14b76d5266ccd4d313f56
 import controlP5.*;
 import fisica.*;
 import geomerative.*;
@@ -14,8 +19,13 @@ Stone stone;
 
 void setup() {
   size(1024, 768);
+<<<<<<< HEAD
+  smooth();
+  b = loadImage("sand.jpg");
+=======
   //smooth();
   b = loadImage("sabbia.jpg");
+>>>>>>> 9a732a37fa2b76cdf6d14b76d5266ccd4d313f56
   b.resize(width, height);
 
   frameRate(24);

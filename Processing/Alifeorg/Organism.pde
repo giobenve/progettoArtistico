@@ -128,7 +128,13 @@ abstract class Organism extends FPoly {
         if (
           b instanceof Food &&
           dist(getX(), getY(), b.getX(), b.getY()) < 200 &&
+<<<<<<< HEAD
+
           good(b)) {//Distanza dal cibo
+
+=======
+          good(b)) {//Distanza dal cibo
+>>>>>>> 9a732a37fa2b76cdf6d14b76d5266ccd4d313f56
           target = b;
           setVelocity(target.getX()-getX(), target.getY()-getY());
           break;
@@ -139,12 +145,20 @@ abstract class Organism extends FPoly {
       //TODO non funziona if (!target.isDrawable()) {target = null; return;}
       addForce(target.getX()-getX(), target.getY()-getY());
       
+<<<<<<< HEAD
+       //DEBUG
+=======
       /* DEBUG
+>>>>>>> 9a732a37fa2b76cdf6d14b76d5266ccd4d313f56
       stroke(0);
       line(getForceX()-getX(), getForceY()-getY(), getX(), getY());
       line(target.getX(), target.getY(), getX(), getY());
       noStroke();
+<<<<<<< HEAD
+      
+=======
       */
+>>>>>>> 9a732a37fa2b76cdf6d14b76d5266ccd4d313f56
     }
   }
   
