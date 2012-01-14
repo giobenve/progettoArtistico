@@ -7,14 +7,16 @@ class GUI implements ControlListener {
   Button b;
 
   ColorPicker cp;
-
+  
+  int orgid = 1;
+  
   GUI(ControlP5 cp5) {
 
     this.controlP5 = cp5;
     controlP5.addListener(this);
 
     b = controlP5.addButton("Opzioni", 1, 20, 20, 100, 20);
-    b.setId(1);   
+    b.setId(99);   
 
     createPanel();
   }
@@ -23,7 +25,7 @@ class GUI implements ControlListener {
     Controller c = theEvent.controller();
     println(c.name()+" "+c.id());
     switch(c.id()) {
-      case(1):
+      case(99):
       if (panel.isVisible()) {
         panel.hide();
       } 
@@ -31,8 +33,14 @@ class GUI implements ControlListener {
         panel.show();
       }
       break;
+      case(0):
+      orgid = 0;
+      break;
+      case(1):
+      orgid = 1;
+      break;
       case(2):
-
+      orgid = 2;
       break;
     }
   }
@@ -43,9 +51,29 @@ class GUI implements ControlListener {
     panel.setBackgroundColor(color(0, 100));
     panel.hideBar();
     
-    cp = controlP5.addColorPicker("picker", 10, 10, 100, 20);
+    cp = controlP5.addColorPicker("picker", 10, 10, 100, 20);//barra colori
     cp.moveTo(panel);
     
+    ControllerSprite sprite0 = new ControllerSprite(controlP5,loadImage("pink.png"),50, 50);
+    controlP5.Button pink = controlP5.addButton("pink",2,0,70,50,50);
+    pink.setSprite(sprite0);  
+    pink.moveTo(panel);
+    pink.setColorBackground(color(254, 155, 144));
+    pink.setId(0);
+    
+    ControllerSprite sprite1 = new ControllerSprite(controlP5,loadImage("orange.png"),50, 50);
+    controlP5.Button orange = controlP5.addButton("orange",2,50,70,50,50);
+    orange.setSprite(sprite1);  
+    orange.moveTo(panel);
+    orange.setColorBackground(color(254, 155, 144));
+    orange.setId(1);
+    
+    ControllerSprite sprite2 = new ControllerSprite(controlP5,loadImage("green.png"),50, 50);
+    controlP5.Button green = controlP5.addButton("green",2,100,70,50,50);
+    green.setSprite(sprite2);  
+    green.moveTo(panel);
+    green.setColorBackground(color(254, 155, 144));
+    green.setId(2);
   }
 }
 
