@@ -2,9 +2,9 @@ class Orange extends Organism {
   
   Orange(int x, int y) { 
     super(x,y,"orange.svg");
-    gene1 = (int) random(70,100);
-    gene2 = (int) random(200,700);
-        gene0 = color(gene1, gene2, random(255));
+    gene1 = (int) random(900);
+    gene2 = (int) random(50,900);
+    gene0 = color(0, 255, 0);
 
   }
   

@@ -140,6 +140,11 @@ abstract class Organism extends FPoly {
       addForce(target.getX()-getX(), target.getY()-getY());
       
       // DEBUG
+>>>>>>>>>>>>>>>>>>>> File 1
+>>>>>>>>>>>>>>>>>>>> File 2
+>>>>>>>>>>>>>>>>>>>> File 3
+      /* DEBUG
+<<<<<<<<<<<<<<<<<<<<
       stroke(0);
       //line(getForceX()-getX(), getForceY()-getY(), getX(), getY());
       line(target.getX(), target.getY(), getX(), getY());
