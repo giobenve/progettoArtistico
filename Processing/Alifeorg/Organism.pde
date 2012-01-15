@@ -139,12 +139,12 @@ abstract class Organism extends FPoly {
       //TODO non funziona if (!target.isDrawable()) {target = null; return;}
       addForce(target.getX()-getX(), target.getY()-getY());
       
-      /* DEBUG
+      // DEBUG
       stroke(0);
-      line(getForceX()-getX(), getForceY()-getY(), getX(), getY());
+      //line(getForceX()-getX(), getForceY()-getY(), getX(), getY());
       line(target.getX(), target.getY(), getX(), getY());
       noStroke();
-      */
+      
     }
   }
   
