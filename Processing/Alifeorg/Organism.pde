@@ -70,29 +70,30 @@ abstract class Organism extends FPoly {
     }
 
     postDraw(applet);
-    
-    if (abs(mouseX-getX()) < 20 && abs(mouseY-getY()) < 20) {
-      fill(gene0, 50);  
-      ellipse(getX(), getY(), gene2, gene2);
-      fill(gene0, 70);
-      ellipse(getX(), getY(), gene1, gene1);
-      noFill();
-    }
-
+if (!gui.panel.isVisible()) {
     pushMatrix();
     translate(getX(), getY());
     rotate(getRotation());
-    /*DEBUG
+  
+    if (abs(mouseX-getX()) < 20 && abs(mouseY-getY()) < 20) {
+      fill(gene0, 50);
+      ellipse(0,0, gene2, gene2);
+      fill(gene0, 70);
+      ellipse(0,0, gene1, gene1);
+      noFill();
+    }
+    
+    //DEBUG
     stroke(0);
     line(0, 0, getVelocityX(), getVelocityY()); 
     noStroke();
 
     fill(255, 0, 0);  
-    //ellipse(0, 0, 2, 2);
+    ellipse(0, 0, 2, 2);
     
     noFill();
     //DEBUG
-    */
+    
 
     /*if ((millis() - rotationTimer) > 1000) {//Per farlo nuotare dritto
      if (getContacts().size() == 0) {
@@ -103,7 +104,7 @@ abstract class Organism extends FPoly {
      }
      }*/
     popMatrix();
-
+}
 
     //if ((millis() - predationTimer) > 1000) {//Per fargli inseguire il cibo
 

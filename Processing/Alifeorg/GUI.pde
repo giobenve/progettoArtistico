@@ -28,9 +28,11 @@ class GUI implements ControlListener {
       case(99):
       if (panel.isVisible()) {
         panel.hide();
+        //loop();
       } 
       else {
         panel.show();
+        //noLoop();
       }
       break;
       case(0):
@@ -55,31 +57,28 @@ class GUI implements ControlListener {
     cp.moveTo(panel);
     
 
-    ControllerSprite sprite0 = new ControllerSprite(controlP5,loadImage("pink.png"),31, 31);
+    //ControllerSprite sprite0 = new ControllerSprite(controlP5,loadImage("prova.png"),31, 31);
     controlP5.Button pink = controlP5.addButton("pink",2,10,80,31,31);
-    pink.setSprite(sprite0);  
-
-    pink.moveTo(panel);
+    //pink.setSprite(sprite0);  
     pink.setColorBackground(color(254, 155, 144));
     pink.setId(0);
+    pink.moveTo(panel);
     
 
-    ControllerSprite sprite1 = new ControllerSprite(controlP5,loadImage("orange.png"),31, 31);
+    //ControllerSprite sprite1 = new ControllerSprite(controlP5,loadImage("orange.png"),31, 31);
     controlP5.Button orange = controlP5.addButton("orange", 2, 51, 80, 31, 31);
-
-    orange.setSprite(sprite1);  
-    orange.moveTo(panel);
     orange.setColorBackground(color(254, 155, 144));
     orange.setId(1);
+    //orange.setSprite(sprite1);  
+    orange.moveTo(panel);
     
 
-    ControllerSprite sprite2 = new ControllerSprite(controlP5,loadImage("green.png"),31, 31);
+    //ControllerSprite sprite2 = new ControllerSprite(controlP5,loadImage("green.png"),31, 31);
     controlP5.Button green = controlP5.addButton("green", 2, 92, 80, 31, 31);
-
-    green.setSprite(sprite2);  
-    green.moveTo(panel);
     green.setColorBackground(color(254, 155, 144));
     green.setId(2);
+    //green.setSprite(sprite2);  
+    green.moveTo(panel);
   }
 }
 

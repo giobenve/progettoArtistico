@@ -17,7 +17,7 @@ void setup() {
   b.resize(width, height);
 
   frameRate(24);
-  
+
   controlP5 = new ControlP5(this);
   gui = new GUI(controlP5);
 
@@ -36,7 +36,6 @@ void setup() {
   world.add(new Pink((int)random(0, width), (int)random(0, height)));
   world.add(new Orange((int)random(0, width), (int)random(0, height)));
   world.add(new Green((int)random(0, width), (int)random(0, height)));
-  
 }
 
 void draw() {
@@ -47,33 +46,37 @@ void draw() {
   if (stone != null) {
     stone.draw(this);
   }
-
-  world.step();
+  if (!gui.panel.isVisible()) {
+    world.step();
+  }
   fill(0);
   text(frameRate, width-50, height-20);
+
 }
 
 void mousePressed() {
-  FBody hovered = world.getBody(mouseX, mouseY);
-  if (hovered == null && !gui.panel.isVisible()) {
-    switch (gui.orgid) {
-    case 0:
-      world.add(new Pink(mouseX, mouseY));
-      break;
-    case 1:
-      world.add(new Orange(mouseX, mouseY));
-      break;
-    case 2:
-      world.add(new Green(mouseX, mouseY));
-      break;
-    case -1://Disegno sasso
-      stone = new Stone();
-      stone.vertex(mouseX, mouseY);
-      break;
+  if (!gui.panel.isVisible()) {
+    FBody hovered = world.getBody(mouseX, mouseY);
+    if (hovered == null && !(mouseX < 150 && mouseY < 50)) {//Non creo nell'angolo in alto a sistra sotto il bottone
+      switch (gui.orgid) {
+      case 0:
+        world.add(new Pink(mouseX, mouseY));
+        break;
+      case 1:
+        world.add(new Orange(mouseX, mouseY));
+        break;
+      case 2:
+        world.add(new Green(mouseX, mouseY));
+        break;
+      case -1://Disegno sasso
+        stone = new Stone();
+        stone.vertex(mouseX, mouseY);
+        break;
+      }
+    } 
+    else if (gui.orgid == -2) {//Cancello corpo
+      world.remove(hovered);
     }
-  } 
-  else if (gui.orgid == -2) {//Cancello corpo
-    world.remove(hovered);
   }
 }
 
