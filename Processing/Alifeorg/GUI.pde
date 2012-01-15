@@ -55,8 +55,8 @@ class GUI implements ControlListener {
     cp.moveTo(panel);
     
 
-    ControllerSprite sprite0 = new ControllerSprite(controlP5,loadImage("pink.png"),50, 50);
-    controlP5.Button pink = controlP5.addButton("pink",2,0,70,50,50);
+    ControllerSprite sprite0 = new ControllerSprite(controlP5,loadImage("pink.png"),31, 31);
+    controlP5.Button pink = controlP5.addButton("pink",2,10,80,31,31);
     pink.setSprite(sprite0);  
 
     pink.moveTo(panel);
