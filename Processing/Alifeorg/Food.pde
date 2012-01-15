@@ -10,7 +10,7 @@ class Food extends FCircle {
     //gene0 = color(random(255), random(255), random(255));
 
     float angle = random(TWO_PI);
-    float magnitude = 50;
+    float magnitude = 0;
 
     //this.setFill(83, 248, 0);   //RGB
     this.setFill(red(gene0), green(gene0), blue(gene0)); 
@@ -18,8 +18,9 @@ class Food extends FCircle {
     this.setRotation(angle+PI/2);
     this.setVelocity(magnitude*cos(angle), magnitude*sin(angle));
     this.setDamping(0);
-    this.setRestitution(0.5);
-    //this.setDensity(100);
+    this.setRestitution(0);
+    this.setDensity(200);
+
   }
 }
 

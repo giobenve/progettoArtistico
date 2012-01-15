@@ -1,5 +1,3 @@
-import processing.opengl.*;
-
 import controlP5.*;
 import fisica.*;
 import geomerative.*;
@@ -7,15 +5,15 @@ import geomerative.*;
 ControlP5 controlP5;
 GUI gui;
 FWorld world;
-//String filename = "pink.svg";
-int orgid = 0;
+
 PImage b;
 Stone stone;
 
 void setup() {
   size(1024, 768);
-  //smooth();
-  b = loadImage("sabbia.jpg");
+
+  smooth();
+  b = loadImage("sand.jpg");
   b.resize(width, height);
 
   frameRate(24);
@@ -58,7 +56,7 @@ void draw() {
 void mousePressed() {
   FBody hovered = world.getBody(mouseX, mouseY);
   if (hovered == null && !gui.panel.isVisible()) {
-    switch (orgid) {
+    switch (gui.orgid) {
     case 0:
       world.add(new Pink(mouseX, mouseY));
       break;
@@ -74,7 +72,7 @@ void mousePressed() {
       break;
     }
   } 
-  else if (orgid == -2) {//Cancello corpo
+  else if (gui.orgid == -2) {//Cancello corpo
     world.remove(hovered);
   }
 }
@@ -102,7 +100,7 @@ void keyPressed() {
     int intk = -1;
     try {
       intk = Integer.parseInt(key + "");
-      orgid = constrain(intk, 0, 2);
+      gui.orgid = constrain(intk, 0, 2);
     } 
     catch (NumberFormatException e) {
     }
@@ -112,10 +110,10 @@ void keyPressed() {
         world.add(new Food(mouseX, mouseY, gui.cp.getColorValue()));
         break;
       case 's':
-        orgid = -1;
+        gui.orgid = -1;
         break;
       case 'c':
-        orgid = -2;
+        gui.orgid = -2;
         break;
       }
     }

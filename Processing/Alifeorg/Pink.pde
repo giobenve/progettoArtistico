@@ -2,10 +2,9 @@ class Pink extends Organism {
 
   Pink(int x, int y) { 
     super(x, y, "pink.svg");
-
-    gene1 = (int) random(100, 255);
+    gene1 = (int) random(50, 255);
     gene2 = (int) random(50, 400);
-    gene0 = color(gene1, gene2, random(255));
+    gene0 = color(255, 255, 255);
   }
 
   void mangia(FBody f) {
