@@ -54,38 +54,28 @@ class GUI implements ControlListener {
     cp = controlP5.addColorPicker("picker", 10, 10, 100, 20);//barra colori
     cp.moveTo(panel);
     
-<<<<<<< HEAD
-    ControllerSprite sprite = new ControllerSprite(controlP5,loadImage("pink.png"),31, 31);
-    controlP5.Button pink = controlP5.addButton("pink",2,10,80,31,31);
-    pink.setSprite(sprite);
-=======
+
     ControllerSprite sprite0 = new ControllerSprite(controlP5,loadImage("pink.png"),50, 50);
     controlP5.Button pink = controlP5.addButton("pink",2,0,70,50,50);
     pink.setSprite(sprite0);  
->>>>>>> a20f92f76cedfa6b188037b376960c7c993358c6
+
     pink.moveTo(panel);
     pink.setColorBackground(color(254, 155, 144));
     pink.setId(0);
     
-<<<<<<< HEAD
+
     ControllerSprite sprite1 = new ControllerSprite(controlP5,loadImage("orange.png"),31, 31);
     controlP5.Button orange = controlP5.addButton("orange", 2, 51, 80, 31, 31);
-=======
-    ControllerSprite sprite1 = new ControllerSprite(controlP5,loadImage("orange.png"),50, 50);
-    controlP5.Button orange = controlP5.addButton("orange",2,50,70,50,50);
->>>>>>> a20f92f76cedfa6b188037b376960c7c993358c6
+
     orange.setSprite(sprite1);  
     orange.moveTo(panel);
     orange.setColorBackground(color(254, 155, 144));
     orange.setId(1);
     
-<<<<<<< HEAD
+
     ControllerSprite sprite2 = new ControllerSprite(controlP5,loadImage("green.png"),31, 31);
     controlP5.Button green = controlP5.addButton("green", 2, 92, 80, 31, 31);
-=======
-    ControllerSprite sprite2 = new ControllerSprite(controlP5,loadImage("green.png"),50, 50);
-    controlP5.Button green = controlP5.addButton("green",2,100,70,50,50);
->>>>>>> a20f92f76cedfa6b188037b376960c7c993358c6
+
     green.setSprite(sprite2);  
     green.moveTo(panel);
     green.setColorBackground(color(254, 155, 144));
