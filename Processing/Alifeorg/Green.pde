@@ -44,11 +44,15 @@ class Green extends Organism {
     }
   }
 
-  public boolean good(Organism f) {
-    if (f instanceof Green || f.outline.getHeight() >= outline.getHeight()) { 
+  public boolean good(FBody b) {
+    if (b instanceof Green || !(b instanceof Organism)) { 
       return false;
     }
-
+    Organism f = (Organism) b;
+    if (f.outline.getHeight() >= outline.getHeight()) { 
+      return false;
+    }
+    
     return dist(red(f.gene0), green(f.gene0), blue(f.gene0), red(gene0), green(gene0), blue(gene0)) < gene1;
   }
 

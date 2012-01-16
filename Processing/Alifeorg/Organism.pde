@@ -127,7 +127,6 @@ if (!gui.panel.isVisible()) {
       for (int i=0; i<allb.size(); i++) {//Cerco Food
         FBody b = (FBody) allb.get((int)random(0, allb.size()));
         if (
-          b instanceof Food &&
           dist(getX(), getY(), b.getX(), b.getY()) < 200 &&
           good(b)) {//Distanza dal cibo
           target = b;
