@@ -19,19 +19,28 @@ abstract class Organism extends FPoly {
     this.setRotation(angle+PI/2);
     this.setVelocity(magnitude*cos(angle), magnitude*sin(angle));
     /*this.setDamping(0);
-    this.setAngularDamping(0.5);*/
+     this.setAngularDamping(0.5);*/
     this.setRestitution(0.5);
     this.setDensity(0.7);
     /*this.setGrabbable(false);*/
 
     RShape fullSvg = RG.loadShape(file);
+
+    outline = fullSvg.getChild("outline");
+    //Per posizionare centro dell'oggetto in faccia
+    float tx = outline.getCenter().x * -1;
+    float ty = outline.getCenter().y * -0.5;
+    outline.translate(tx, ty);
+
     for (int i=0; i<corpo.length; i++) {//Carico forma corpo
       corpo[i] = fullSvg.getChild("object"+(i+1));
+      corpo[i].translate(tx, ty);
     }
     for (int i=0; i<occhi.length; i++) {//Carcio forma occhi
       occhi[i] = fullSvg.getChild("occhi"+(i+1));
+      occhi[i].translate(tx, ty);
     }
-    outline = fullSvg.getChild("outline");
+
 
 
     if (outline == null) {
@@ -70,41 +79,41 @@ abstract class Organism extends FPoly {
     }
 
     postDraw(applet);
-if (!gui.panel.isVisible()) {
-    pushMatrix();
-    translate(getX(), getY());
-    rotate(getRotation());
-  
-    if (abs(mouseX-getX()) < 20 && abs(mouseY-getY()) < 20) {
-      fill(gene0, 50);
-      ellipse(0,0, gene2, gene2);
-      fill(gene0, 70);
-      ellipse(0,0, gene1, gene1);
+    if (!gui.panel.isVisible()) {
+      pushMatrix();
+      translate(getX(), getY());
+      rotate(getRotation());
+
+      if (abs(mouseX-getX()) < 20 && abs(mouseY-getY()) < 20) {
+        fill(gene0, 50);
+        ellipse(0, 0, gene2, gene2);
+        fill(gene0, 70);
+        ellipse(0, 0, gene1*2, gene1*2);
+        noFill();
+      }
+
+      //DEBUG
+      stroke(0);
+      line(0, 0, getVelocityX(), getVelocityY()); 
+      noStroke();
+
+      fill(255, 0, 0);  
+      ellipse(0, 0, 2, 2);
+
       noFill();
+      //DEBUG
+
+
+      /*if ((millis() - rotationTimer) > 1000) {//Per farlo nuotare dritto
+       if (getContacts().size() == 0) {
+       setRotation( - (atan2(getVelocityX(), getVelocityY()) - PI));
+       } 
+       else {
+       rotationTimer = millis();
+       }
+       }*/
+      popMatrix();
     }
-    
-    //DEBUG
-    stroke(0);
-    line(0, 0, getVelocityX(), getVelocityY()); 
-    noStroke();
-
-    fill(255, 0, 0);  
-    ellipse(0, 0, 2, 2);
-    
-    noFill();
-    //DEBUG
-    
-
-    /*if ((millis() - rotationTimer) > 1000) {//Per farlo nuotare dritto
-     if (getContacts().size() == 0) {
-     setRotation( - (atan2(getVelocityX(), getVelocityY()) - PI));
-     } 
-     else {
-     rotationTimer = millis();
-     }
-     }*/
-    popMatrix();
-}
 
     //if ((millis() - predationTimer) > 1000) {//Per fargli inseguire il cibo
 
@@ -127,7 +136,7 @@ if (!gui.panel.isVisible()) {
       for (int i=0; i<allb.size(); i++) {//Cerco Food
         FBody b = (FBody) allb.get((int)random(0, allb.size()));
         if (
-          dist(getX(), getY(), b.getX(), b.getY()) < 200 &&
+        dist(getX(), getY(), b.getX(), b.getY()) < 200 &&
           good(b)) {//Distanza dal cibo
           target = b;
           setVelocity(target.getX()-getX(), target.getY()-getY());
@@ -136,26 +145,27 @@ if (!gui.panel.isVisible()) {
       }
     }
     if (target != null) {
-      //TODO non funziona if (!target.isDrawable()) {target = null; return;}
+      //TODO non funziona 
+      //if (!target.isDrawable()) {target = null; return;}
+
       addForce(target.getX()-getX(), target.getY()-getY());
-      
+
       // DEBUG
       stroke(0);
       //line(getForceX()-getX(), getForceY()-getY(), getX(), getY());
       line(target.getX(), target.getY(), getX(), getY());
       noStroke();
-      
     }
   }
-  
+
   abstract void mangia(FBody f);
-  
+
   public boolean good(FBody f) {
     if (f instanceof Food) {
       Food fo = (Food) f;
       return dist(red(fo.gene0), green(fo.gene0), blue(fo.gene0), red(gene0), green(gene0), blue(gene0)) < gene1;
     }
-    return false;  
+    return false;
   }
 
   void dimagrisci() {
@@ -189,7 +199,5 @@ if (!gui.panel.isVisible()) {
 
     recreateInWorld();
   }
-  
 }
-
 
