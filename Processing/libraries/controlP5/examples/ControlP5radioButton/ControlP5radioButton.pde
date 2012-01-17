@@ -15,11 +15,11 @@ void setup() {
   smooth();
   controlP5 = new ControlP5(this);
   r = controlP5.addRadioButton("radioButton",20,160);
-  r.setColorForeground(color(120));
+  /*r.setColorForeground(color(120));
   r.setColorActive(color(255));
   r.setColorLabel(color(255));
   r.setItemsPerRow(5);
-  r.setSpacingColumn(50);
+  r.setSpacingColumn(50);*/
 
   addToRadioButton(r,"50",1);
   addToRadioButton(r,"100",2);
@@ -31,10 +31,10 @@ void setup() {
 
 void addToRadioButton(RadioButton theRadioButton, String theName, int theValue ) {
   Toggle t = theRadioButton.addItem(theName,theValue);
-  t.captionLabel().setColorBackground(color(80));
+  /*t.captionLabel().setColorBackground(color(80));
   t.captionLabel().style().movePadding(2,0,-1,2);
   t.captionLabel().style().moveMargin(-2,0,0,-3);
-  t.captionLabel().style().backgroundWidth = 46;
+  t.captionLabel().style().backgroundWidth = 46;*/
 }
 
 

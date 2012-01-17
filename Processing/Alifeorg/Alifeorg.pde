@@ -51,7 +51,6 @@ void draw() {
   }
   fill(0);
   text(frameRate, width-50, height-20);
-
 }
 
 void mousePressed() {
@@ -68,9 +67,12 @@ void mousePressed() {
       case 2:
         world.add(new Green(mouseX, mouseY));
         break;
-      case -1://Disegno sasso
+      case 3://Disegno sasso
         stone = new Stone();
         stone.vertex(mouseX, mouseY);
+        break;
+      case 4://Creo cibo
+        world.add(new Food(mouseX, mouseY, gui.cp.getColorValue()));
         break;
       }
     } 
@@ -103,20 +105,27 @@ void keyPressed() {
     int intk = -1;
     try {
       intk = Integer.parseInt(key + "");
-      gui.orgid = constrain(intk, 0, 2);
+      gui.orgid = constrain(intk, 0, 4);
     } 
     catch (NumberFormatException e) {
     }
     if (intk == -1) {
       switch (key) {
       case 'p':
-        world.add(new Food(mouseX, mouseY, gui.cp.getColorValue()));
+        gui.orgid = 4;
         break;
       case 's':
-        gui.orgid = -1;
+        gui.orgid = 3;
         break;
       case 'c':
         gui.orgid = -2;
+        break;
+      case 'o':
+        if (gui.panel.isVisible()) {
+          gui.panel.hide();
+        } else {
+          gui.panel.show();
+        }
         break;
       }
     }

@@ -3,48 +3,42 @@ class GUI implements ControlListener {
   ControlP5 controlP5;
 
   ControlGroup panel;
-  
+
   Button b;
 
   ColorPicker cp;
-  
+
   int orgid = 1;
-  
+
   GUI(ControlP5 cp5) {
 
     this.controlP5 = cp5;
     controlP5.addListener(this);
 
-    b = controlP5.addButton("Opzioni", 1, 20, 20, 100, 20);
+    b = controlP5.addButton("Opzioni (o)", 1, 20, 20, 100, 20);
     b.setId(99);   
 
     createPanel();
   }
 
   public void controlEvent(ControlEvent theEvent) {
-    Controller c = theEvent.controller();
-    println(c.name()+" "+c.id());
-    switch(c.id()) {
-      case(99):
-      if (panel.isVisible()) {
-        panel.hide();
-        //loop();
+    
+    if(theEvent.isGroup()) {
+      if (theEvent.group().name().equals("radioButton")) {
+        orgid = (int)theEvent.group().value();
       } 
-      else {
-        panel.show();
-        //noLoop();
-      }
-      break;
-      case(0):
-      orgid = 0;
-      break;
-      case(1):
-      orgid = 1;
-      break;
-      case(2):
-      orgid = 2;
-      break;
+    } else if (panel.isVisible()) {
+      panel.hide();
+      //loop();
+    } else {
+      panel.show();
+      //noLoop();
     }
+    
+    
+    //Controller c = theEvent.controller();
+    //println(c.name()+" "+c.id());
+
   }
 
   void createPanel() {
@@ -52,33 +46,17 @@ class GUI implements ControlListener {
     panel.setBackgroundHeight(120);
     panel.setBackgroundColor(color(0, 100));
     panel.hideBar();
-    
+
     cp = controlP5.addColorPicker("picker", 10, 10, 100, 20);//barra colori
     cp.moveTo(panel);
-    
 
-    //ControllerSprite sprite0 = new ControllerSprite(controlP5,loadImage("prova.png"),31, 31);
-    controlP5.Button pink = controlP5.addButton("pink",2,10,80,31,31);
-    //pink.setSprite(sprite0);  
-    pink.setColorBackground(color(254, 155, 144));
-    pink.setId(0);
-    pink.moveTo(panel);
-    
-
-    //ControllerSprite sprite1 = new ControllerSprite(controlP5,loadImage("orange.png"),31, 31);
-    controlP5.Button orange = controlP5.addButton("orange", 2, 51, 80, 31, 31);
-    orange.setColorBackground(color(254, 155, 144));
-    orange.setId(1);
-    //orange.setSprite(sprite1);  
-    orange.moveTo(panel);
-    
-
-    //ControllerSprite sprite2 = new ControllerSprite(controlP5,loadImage("green.png"),31, 31);
-    controlP5.Button green = controlP5.addButton("green", 2, 92, 80, 31, 31);
-    green.setColorBackground(color(254, 155, 144));
-    green.setId(2);
-    //green.setSprite(sprite2);  
-    green.moveTo(panel);
+    RadioButton r = controlP5.addRadioButton("radioButton", 220, 10);
+    r.addItem("pink", 0);
+    r.addItem("orange", 1);
+    r.addItem("green", 2);
+    r.addItem("stone", 3);
+    r.addItem("food", 4);
+    r.moveTo(panel);
   }
 }
 
