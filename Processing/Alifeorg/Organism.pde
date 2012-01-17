@@ -143,10 +143,9 @@ abstract class Organism extends FPoly {
           break;
         }
       }
-    }
+    }//Non metto ramo else perchè possono essere eseguiti entrambi
     if (target != null) {
-      //TODO non funziona 
-      //if (!target.isDrawable()) {target = null; return;}
+      if (m_world.getBody(target.getX(), target.getY()) != target) {target = null; return;}
 
       addForce(target.getX()-getX(), target.getY()-getY());
 
