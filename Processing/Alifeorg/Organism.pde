@@ -104,14 +104,16 @@ abstract class Organism extends FPoly {
       //DEBUG
 
 
-      /*if ((millis() - rotationTimer) > 1000) {//Per farlo nuotare dritto
-       if (getContacts().size() == 0) {
-       setRotation( - (atan2(getVelocityX(), getVelocityY()) - PI));
-       } 
-       else {
-       rotationTimer = millis();
-       }
-       }*/
+      //if ((millis() - rotationTimer) > 1000) {//Per farlo nuotare dritto
+        if (getContacts().size() == 0) {
+         // addTorque(atan2(getVelocityX(), getVelocityY()) - PI);
+         //adjustRotation(atan2(getVelocityX(), getVelocityY())/TWO_PI);
+         setRotation( - (atan2(getVelocityX(), getVelocityY()) - PI));
+        } 
+      /*  else {
+          rotationTimer = millis();
+        }
+      }*/
       popMatrix();
     }
 
@@ -140,12 +142,18 @@ abstract class Organism extends FPoly {
           good(b)) {//Distanza dal cibo
           target = b;
           setVelocity(target.getX()-getX(), target.getY()-getY());
+          //setRotation( - (atan2(getVelocityX(), getVelocityY()) - PI));
+          
+          
           break;
         }
       }
     }//Non metto ramo else perchè possono essere eseguiti entrambi
     if (target != null) {
-      if (m_world.getBody(target.getX(), target.getY()) != target) {target = null; return;}
+      if (m_world.getBody(target.getX(), target.getY()) != target) {
+        target = null; 
+        return;
+      }
 
       addForce(target.getX()-getX(), target.getY()-getY());
 
