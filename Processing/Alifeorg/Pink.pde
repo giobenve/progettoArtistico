@@ -4,7 +4,8 @@ class Pink extends Organism {
     super(x, y, "pink.svg");
     gene1 = (int) random(50, 255);
     gene2 = (int) random(50, 400);
-    gene0 = color(255, 255, 255);
+    //gene0 = color(255, 255, 255);
+    gene0 = gui.cp.getColorValue();
   }
 
   void mangia(FBody f) {

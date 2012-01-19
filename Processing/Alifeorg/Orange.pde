@@ -4,8 +4,8 @@ class Orange extends Organism {
     super(x,y,"orange.svg");
     gene1 = (int) random(900);
     gene2 = (int) random(50,900);
-    gene0 = color(0, 255, 0);
-
+    //gene0 = color(0, 255, 0);
+    gene0 = gui.cp.getColorValue();
   }
   
   void mangia(FBody f) {
