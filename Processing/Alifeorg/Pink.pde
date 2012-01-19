@@ -17,9 +17,9 @@ class Pink extends Organism {
       if (outline.getHeight() > 80) {
         Organism org = new Pink((int)getX(), (int)getY());
         org.gene0 = color(
-          constrain(red(gene1) + (int)random(-10,+10), 0, 255),
-          constrain(green(gene1) + (int)random(-10,+10), 0, 255),
-          constrain(blue(gene1) + (int)random(-10,+10), 0, 255)
+          constrain(red(gene0) + (int)random(-10,+10), 0, 255),
+          constrain(green(gene0) + (int)random(-10,+10), 0, 255),
+          constrain(blue(gene0) + (int)random(-10,+10), 0, 255)
         );
         org.gene1 = gene1 + (int)random(-10,+10);
         org.gene2 = gene2 + (int)random(-10,+10);
