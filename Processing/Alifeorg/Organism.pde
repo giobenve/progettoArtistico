@@ -88,7 +88,7 @@ abstract class Organism extends FPoly {
         fill(gene0, 50);
         ellipse(0, 0, gene2, gene2);
         fill(gene0, 70);
-        ellipse(0, 0, gene1*2, gene1*2);
+        ellipse(0, 0, gene1, gene1);
         noFill();
       }
 
@@ -137,9 +137,7 @@ abstract class Organism extends FPoly {
       ArrayList allb = m_world.getBodies();
       for (int i=0; i<allb.size(); i++) {//Cerco Food
         FBody b = (FBody) allb.get((int)random(0, allb.size()));
-        if (
-        dist(getX(), getY(), b.getX(), b.getY()) < 200 &&
-          good(b)) {//Distanza dal cibo
+        if (good(b)) {//Distanza dal cibo
           target = b;
           setVelocity(target.getX()-getX(), target.getY()-getY());
           //setRotation( - (atan2(getVelocityX(), getVelocityY()) - PI));

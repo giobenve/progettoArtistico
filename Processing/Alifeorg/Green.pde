@@ -35,9 +35,13 @@ class Green extends Organism {
     //Figli
     if (outline.getHeight() > 80) {
       Organism org = new Green((int)getX(), (int)getY());
-      org.gene0 = gene0;
-      org.gene1 = gene1;
-      org.gene2 = gene2;
+      org.gene0 = color(
+        constrain(red(gene1) + (int)random(-10,+10), 0, 255),
+        constrain(green(gene1) + (int)random(-10,+10), 0, 255),
+        constrain(blue(gene1) + (int)random(-10,+10), 0, 255)
+      );
+      org.gene1 = gene1 + (int)random(-10,+10);
+      org.gene2 = gene2 + (int)random(-10,+10);
       m_world.add(org);
       recreate(0.25);
       return;
