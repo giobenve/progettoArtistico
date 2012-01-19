@@ -92,7 +92,7 @@ abstract class Organism extends FPoly {
         noFill();
       }
 
-      //DEBUG
+      /*DEBUG
       stroke(0);
       line(0, 0, getVelocityX(), getVelocityY()); 
       noStroke();
@@ -100,7 +100,7 @@ abstract class Organism extends FPoly {
       fill(255, 0, 0);  
       ellipse(0, 0, 2, 2);
 
-      noFill();
+      noFill();*/
       //DEBUG
 
 
@@ -158,10 +158,10 @@ abstract class Organism extends FPoly {
       addForce(target.getX()-getX(), target.getY()-getY());
 
       // DEBUG
-      stroke(0);
+      //stroke(0);
       //line(getForceX()-getX(), getForceY()-getY(), getX(), getY());
-      line(target.getX(), target.getY(), getX(), getY());
-      noStroke();
+      //line(target.getX(), target.getY(), getX(), getY());
+      //noStroke();
     }
   }
 
